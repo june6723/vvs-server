@@ -1,4 +1,5 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose from 'mongoose';
+const { Schema } = mongoose; 
 
 const communitySchema = mongoose.Schema({
   name: { type: String, required: true },
@@ -10,7 +11,7 @@ const communitySchema = mongoose.Schema({
   requestToJoin : { type: Boolean, required: true },
   mainImg: { type: String },
   coverImg: { type: String },
-})
+}, {timestamps: true})
 
 const Community = mongoose.model('Community', communitySchema);
 
