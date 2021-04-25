@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose; 
 
 const communitySchema = mongoose.Schema({
-  name: { type: String, required: true },
+  name: { type: String, required: true, unique: true },
   description: { type: String },
   tags: [{ type: String }],
   master: { type: Schema.Types.ObjectId, ref: 'User', required: true },

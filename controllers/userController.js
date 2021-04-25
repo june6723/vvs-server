@@ -1,6 +1,7 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
+import Community from '../models/Community.js';
 
 export const login = async (req, res) => {
   const { email, password } = req.body;
@@ -41,3 +42,18 @@ export const signup = async (req, res) => {
     res.status(500).json({ message: 'Something went wrong.' });
   }
 };
+
+export const getJoinedCommunities = async (req, res) => {
+  const userId = req.userId;
+
+  try {
+    const { joinedCommunities } = await User.findOne({ _id: userId });
+    const result = await Community.find({
+      '_id': { $in: joinedCommunities }
+    })
+    res.status(200).json({ communityList: result });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Something went wrong.' });
+  }
+}
