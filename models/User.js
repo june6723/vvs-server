@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import validator from 'validator';
+const { Schema } = mongoose; 
 
 const userSchema = mongoose.Schema({
   name: { type: String, required: true },
@@ -19,6 +20,7 @@ const userSchema = mongoose.Schema({
   birthDate: { type: Date },
   gender: { type: String, enum: ['male', 'female', 'others'] },
   profileImg: { type: String, default: null },
+  joinedCommunities: [{ type: Schema.Types.ObjectId, ref: 'Community' }],
   createdAt: { type: Date, default: new Date() },
   pwUpdated: { type: Date, default: new Date() },
   outDate: { type: Date },
