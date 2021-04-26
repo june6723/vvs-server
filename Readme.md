@@ -12,22 +12,17 @@
 - [ ] Join or send request to community &#8594; PATCH /user/:id/community/:id
 
 ## Communities
-<<<<<<< HEAD
 - [x] **Create new community** &#8594; POST /communities
 - [x] Find community by ObjectID &#8594; GET /communities/find?cmd=id&value='id'
 - [x] Find communities by name &#8594; GET /communities/find?cmd=name&value='name'
-=======
-- [x] **Create new community** &#8594; /communities
-- [ ] Find community 
->>>>>>> 27042803b2b26d712fc0d2f12f36c50844a44b77
-- [ ] Get community's posts
+- [ ] Get community's posts &#8594; GET /communities/:id/posts
 - [ ] Update Community
 - [ ] Delete Community
 - [ ] Accept or decline join request &#8594; PATCH /communities/:id/user/:id
 - [ ] Create new post in a community &#8594; POST /communities/:id/post
 ## Posts
 - [x] **Create new post** &#8594; POST /posts
-- [ ] Create new post in joined community
+- [ ] Create new post in joined community &#8594; POST /posts/community
 - [ ] Update my post
 - [ ] Delete my post
 - [ ] Get my specific user's posts
