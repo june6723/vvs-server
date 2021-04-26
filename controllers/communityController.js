@@ -22,6 +22,33 @@ export const createNewCommunity = async (req, res) => {
   }
 };
 
+export const findCommunity = async (req, res) => {
+  const cmd = req.query.cmd;
+  const value = req.query.value;
 
+  if (!cmd) throw new Error("There's no find option."); 
+  else if (!value) throw new Error("There's no value.");
 
-
+  try {
+    switch (cmd) {
+      case 'id':
+        const idResult = await Community.findOne({ _id: value })
+        res.status(200).json(idResult);
+        break;
+      case 'name':
+        const nameResult = await Community.find({ name: new RegExp('\\b' + value, 'i') });
+        if (!nameResult.length) {
+          res.status(204).json();
+          break;
+        }
+        res.status(200).json(nameResult);
+        break;
+      default:
+        res.status(200).json({ message: "no result" });
+        break;
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(400).json(error.message);
+  }
+}

@@ -9,6 +9,7 @@ const communitySchema = mongoose.Schema({
   admin: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   member: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   requestToJoin : { type: Boolean, required: true },
+  memberRequest: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   mainImg: { type: String },
   coverImg: { type: String },
 }, {timestamps: true})
