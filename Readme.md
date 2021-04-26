@@ -12,7 +12,7 @@
 
 ## Communities
 - [x] **Create new community** &#8594; /communities
-- [] Find community 
+- [ ] Find community 
 - [ ] Get community's posts
 
 ## Posts
