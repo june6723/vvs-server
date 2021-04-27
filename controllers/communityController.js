@@ -1,5 +1,6 @@
 import Community from '../models/Community.js';
 import User from '../models/User.js';
+import Post from '../models/Post.js';
 
 export const createNewCommunity = async (req, res) => {
   const communityForm = req.body;
@@ -52,3 +53,15 @@ export const findCommunity = async (req, res) => {
     res.status(400).json(error.message);
   }
 }
+
+export const getCommunityPosts = async (req, res) => {
+  const communityId = req.params.id;
+  
+  try {
+    const result = await Post.find({ community: communityId });
+    res.status(200).json(result);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json(error.message);
+  }
+};
