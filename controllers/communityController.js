@@ -23,9 +23,32 @@ export const createNewCommunity = async (req, res) => {
   }
 };
 
+export const latestCommunities = async (req, res) => {
+  const { page, lastId } = req.query;
+  let lastId_in_this_query;
+
+  if (page === '1') {
+    try {
+      const result = await Community.find().sort({ createdAt: -1 }).limit(10);
+      lastId_in_this_query = result[result.length-1]._id;
+      res.status(201).json({ result, lastId_in_this_query })
+    } catch (error) {
+      res.status(409).json({ error: error.message });
+    }
+  } else {
+    try {
+      const result = await Community.find({'_id': {'$gt': lastId}}).limit(10);
+      console.log(result);
+      lastId_in_this_query = result[result.length-1]._id;
+      res.status(201).json({ result, lastId_in_this_query })
+    } catch (error) {
+      res.status(409).json({ error: error.message });
+    }
+  }
+};
+
 export const findCommunity = async (req, res) => {
-  const cmd = req.query.cmd;
-  const value = req.query.value;
+  const { cmd, value } = req.query;
 
   if (!cmd) throw new Error("There's no find option."); 
   else if (!value) throw new Error("There's no value.");
@@ -65,3 +88,27 @@ export const getCommunityPosts = async (req, res) => {
     res.status(400).json(error.message);
   }
 };
+
+export const requestToJoinCommunity = async (req, res) => {
+  const userId = req.userId;
+  const communityId = req.params.id;
+  try {
+    const { requestToJoin, member, memberRequest } = await Community.findOne({ _id: communityId });
+    if (requestToJoin) {
+      if (memberRequest.includes(userId)) throw new Error('Already joined');
+      memberRequest.push(userId);
+    } else {
+      if (member.includes(userId)) throw new Error('Already sent request to join');
+      member.push(userId);
+    }
+    const updated = await Community.findByIdAndUpdate(communityId, { member, memberRequest }, { new:true });
+    res.status(200).json(updated);
+  } catch (error) {
+    res.status(400).json(error.message);
+  }
+};
+
+export const handleJoinRequest = async (req, res) => {
+  
+};
+

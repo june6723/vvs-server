@@ -19,9 +19,10 @@
 - [x] Get community's posts &#8594; GET /communities/:id/posts
 - [ ] Update Community
 - [ ] Delete Community
-- [ ] Join or send request to community &#8594; PATCH /communities/:id/user
-- [ ] Accept or decline join request &#8594; PATCH /communities/:id/user/:id
-- [ ] Create new post in a community &#8594; POST /communities/:id/post
+- [x] Join or send request to community &#8594; PATCH /communities/:id/join
+- [ ] Accept or decline join request &#8594; PATCH /communities/:id/join/:id
+- [ ] Trend communities &#8594; GET /communities/trend
+- [x] Latest communities &#8594; GET /communities/latest (Pagination has to be added)
 ## Posts
 - [x] **Create new post** &#8594; POST /posts
 - [x] Create new post in joined community &#8594; POST /posts/community/:id
