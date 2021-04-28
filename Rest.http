@@ -1,0 +1,11 @@
+###
+GET http://localhost:5000/communities/latest?page=1
+###
+GET http://localhost:5000/communities/latest?page=2&lastId=608615a8b4cbbf0015ee3e90
+###
+GET http://localhost:5000/communities/find?cmd=id&value=60857bbede68e10ce73b6c13 
+
+###
+PATCH http://localhost:5000/communities/6088b79169c3a1bdc592622e/join
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNjk1N2U1ODI2NmRjNDQ5YjIyMzk3YSIsImlhdCI6MTYxOTU3MjgxNSwiZXhwIjoxNjE5NTc0NjE1fQ.9efNhEdvD-nnaQpiXQG9maB5Y3oG54M17lT5VNLlRpo
+
