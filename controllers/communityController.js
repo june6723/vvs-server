@@ -109,6 +109,13 @@ export const requestToJoinCommunity = async (req, res) => {
 };
 
 export const handleJoinRequest = async (req, res) => {
-  
+  const { communityId, userId } = req.params;
+  console.log(req.query);
+  try {
+    const currentCommunity = await Community.findOne({ _id: communityId});
+    res.status(200).send();
+  } catch (error) {
+    res.status(400).send(error);
+  }
 };
 
