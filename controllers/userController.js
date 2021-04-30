@@ -7,7 +7,7 @@ const userSearchFields = ["_id", "email", "name", "gender", "birthDate", "joined
 
 export const login = async (req, res) => {
   const { email, password } = req.body;
-
+  
   try {
     const existingUser = await User.findOne({ email });
     if (!existingUser) return res.status(404).json({ message: "User doesn't exists." });

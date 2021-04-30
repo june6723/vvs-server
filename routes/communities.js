@@ -16,6 +16,6 @@ router.get('/find', findCommunity);
 router.get('/:id/posts', getCommunityPosts);
 router.get('/latest', latestCommunities);
 router.patch('/:id/join', auth, requestToJoinCommunity);
-router.patch('/:communityId/join/:userId', handleJoinRequest);
+router.patch('/:communityId/join/:userId', auth, handleJoinRequest);
 
 export default router;

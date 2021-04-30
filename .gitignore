@@ -3,3 +3,5 @@
 .env
 
 .gitignore
+
+Rest.http
