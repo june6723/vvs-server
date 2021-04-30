@@ -20,7 +20,7 @@
 - [ ] Update Community
 - [ ] Delete Community
 - [x] Join or send request to community &#8594; PATCH /communities/:id/join
-- [ ] Accept or decline join request &#8594; PATCH /communities/:communityid/join/:userid
+- [x] Accept or decline join request &#8594; PATCH /communities/:communityid/join/:userid
 - [ ] Trend communities &#8594; GET /communities/trend
 - [x] Latest communities &#8594; GET /communities/latest (Pagination has to be added)
 ## Posts

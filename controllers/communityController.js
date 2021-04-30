@@ -110,10 +110,23 @@ export const requestToJoinCommunity = async (req, res) => {
 
 export const handleJoinRequest = async (req, res) => {
   const { communityId, userId } = req.params;
-  console.log(req.query);
-  try {
+  const approved = req.query.approve === "true" ? true : false;
+  const authUser = req.userId;
+
+  try {    
     const currentCommunity = await Community.findOne({ _id: communityId});
-    res.status(200).send();
+    const adminList = currentCommunity.admin.map((id) => id.toString())
+    if (currentCommunity.master.equals(authUser) || adminList.includes(authUser)) {
+      if (approved) {
+        currentCommunity.member.push(userId); 
+      }
+      currentCommunity.memberRequest = currentCommunity.memberRequest.filter((id) => !id.equals(userId));
+      const result = await currentCommunity.save();
+      res.status(200).send(result);
+    } else {
+      console.log('err');
+      throw new Error(`Not authorized member.`);
+    }
   } catch (error) {
     res.status(400).send(error);
   }
