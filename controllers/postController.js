@@ -41,7 +41,7 @@ export const getMyPosts = async (req, res) => {
   const userId = req.userId;
   
   try {
-    const result = await Post.find({ creator: userId }).sort({ _id: -1});
+    const result = await Post.find({ creator: userId, community: null }).sort({ _id: -1});
 
     res.status(200).json(result);
   } catch (error) {
