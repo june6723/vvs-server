@@ -40,7 +40,7 @@ Heroku Demo: https://vvs-backend.herokuapp.com/
 ## Main Features to update
 - [ ] Upload imgs, vids on post
 - [ ] Friends request
-- [ ] Message
+- [ ] Real time Message
 - [ ] Group Chat
 - [ ] Voice Chat
 - [ ] Screen Sharing
