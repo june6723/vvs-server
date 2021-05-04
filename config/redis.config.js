@@ -1,8 +1,9 @@
 import redis from 'redis'
+import urijs from 'uri-js'
 
 let client;
 if (process.env.REDIS_URL) {
-  const rtg   = require("url-js").parse(process.env.REDIS_URL);
+  const rtg   = urijs.parse(process.env.REDIS_URL);
   client = redis.createClient(rtg.port, rtg.hostname);
 
   redis.auth(rtg.auth.split(":")[1]);
