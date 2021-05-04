@@ -3,7 +3,6 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 import createError from 'http-errors'
-import { verfiyRefreshToken } from '../utils/jwt_verfiy.js';
 
 const expireTime = 15 * 60 // seconds
 
@@ -27,7 +26,8 @@ export const signUp = async (req, res, next) => {
         next(err)
         return
       }
-      res.send({ accessToken, accessTokenExp: expireTime, refreshToken, profile });
+      res.cookie('refreshToken',refreshToken, { httpOnly: true })
+      res.send({ accessToken, accessTokenExp: expireTime ,profile });
     })
   } catch (error) {
     next(error)
@@ -53,7 +53,8 @@ export const logIn = async (req, res, next) => {
         next(err)
         return
       }
-      res.send({ accessToken, accessTokenExp: expireTime, refreshToken, profile });
+      res.cookie('refreshToken',refreshToken, { httpOnly: true })
+      res.send({ accessToken, accessTokenExp: expireTime ,profile });
     })
   } catch (error) {
     console.log(error)
@@ -63,17 +64,23 @@ export const logIn = async (req, res, next) => {
 
 export const signNewToken = async (req, res, next) => {
   try {
-    const { refreshToken } = req.body
+    const cookieStr = req.headers.cookie
+    const refreshToken = cookieStr.split("=")[1]  
     if (!refreshToken) throw createError.BadRequest();
-    const token = req.headers.authorization.split(" ")[1];
-    const decoded = jwt.decode(token)
-    const userId = decoded.id
+    const userId = req.userId
 
     const existingUser = await User.findById(userId);
     if (!existingUser) return next(createError.NotFound("User doesn't exists."))
 
-    await verfiyRefreshToken(refreshToken, userId)
-
+    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err)=> {
+      if(err) return next(createError.Unauthorized())
+      redisClient.GET(userId, (err,value) => {
+        if(err) return next(createError.InternalServerError())
+        if(value!==refreshToken) {
+          return next(createError.Unauthorized())
+        }
+      })
+    })
     const accessToken = jwt.sign({ id: userId }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: expireTime });
     const newRefreshToken = jwt.sign({}, process.env.REFRESH_TOKEN_SECRET, { expiresIn: "1y"})
     const profile = { name: existingUser.name, profileImg: existingUser.profileImg };
@@ -83,7 +90,8 @@ export const signNewToken = async (req, res, next) => {
         next(err)
         return
       }
-      res.send({ accessToken, accessTokenExp: expireTime, refreshToken: newRefreshToken, profile });
+      res.cookie('refreshToken',refreshToken, { httpOnly: true })
+      res.send({ accessToken, accessTokenExp: expireTime ,profile });
     })
   } catch (error) {
     next(error);
@@ -92,7 +100,8 @@ export const signNewToken = async (req, res, next) => {
 
 export const logOut = (req, res, next) => {
   try {
-    const {refreshToken} = req.body
+    const cookieStr = req.headers.cookie
+    const refreshToken = cookieStr.split("=")[1]
     if (!refreshToken) throw createError.BadRequest()
 
     const accessToken = req.headers.authorization.split(" ")[1];

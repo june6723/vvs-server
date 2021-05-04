@@ -1,4 +1,21 @@
 ###
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+  "email":"testuser2@gmail.com",
+  "password":"123123123"
+}
+###
+POST http://localhost:5000/auth/refresh-token
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNjk1ODA0ODI2NmRjNDQ5YjIyMzk3YiIsImlhdCI6MTYyMDE0MTY1MCwiZXhwIjoxNjIwMTQxNzEwfQ.MBA9z5iblVBuxOZvFh3WW_Ff8LMdr43k208slzYnLgw
+Content-Type: application/json
+
+{
+  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MjAxNDE2NTAsImV4cCI6MTY1MTY5OTI1MH0.Wo1txxTB7UM3As7GEGmDE_Ms01yWIvMkznSaDkIJQ0M"
+}
+
+###
 GET http://localhost:5000/communities/latest?page=1
 ###
 GET http://localhost:5000/communities/latest?page=2&lastId=608615a8b4cbbf0015ee3e90
