@@ -7,7 +7,7 @@ import {
   handleJoinRequest,
   latestCommunities,
   requestToJoinCommunity
-} from '../controllers/communityController.js';
+} from '../controllers/Community.controller.js';
 
 const router = express.Router();
 

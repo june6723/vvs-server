@@ -1,10 +1,15 @@
 # VVS server (Development)
-### *Express.js + MongoDB*
+### *Express.js + MongoDB + Redis*
 
 Heroku Demo: https://vvs-backend.herokuapp.com/
+
+## Auth
+- [x] **Log In** &#8594; POST /auth/login
+- [x] **Sign Up** &#8594; POST /auth/signup
+- [x] **Refresh Token** &#8594; POST /auth/refresh-token
+- [x] **Log Out** &#8594; POST /auth/logout
+
 ## User
-- [x] **Log In** &#8594; POST /user/login
-- [x] **Sign Up** &#8594; POST /user/signup
 - [x] **Get joined community list** &#8594; GET /user/:id/communities
 - [ ] Get user's posts &#8594; GET /user/:id/posts
 - [ ] Get user's posts at joined communities &#8594; GET /user/:id/community-posts
