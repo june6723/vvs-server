@@ -1,4 +1,30 @@
 ###
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+  "email" : "testuser2@gmail.com",
+  "password": "123123123"
+}
+###
+POST http://localhost:5000/auth/refresh-token
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNjk1ODA0ODI2NmRjNDQ5YjIyMzk3YiIsImlhdCI6MTYyMDA5MjgwNywiZXhwIjoxNjIwMDk0NjA3fQ.YlD-moJkHkWcF-VfDcQjxcsCzJD8ix21tfoJJza0jGk
+Content-Type: application/json
+
+{
+  "refreshToken" :"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MjAwOTI4MDcsImV4cCI6MTY1MTY1MDQwN30.gtcfGrKQFa2WFGNXEmJr_G8AEUtBsXo1joHsbL5nOHw"
+}
+###
+DELETE  http://localhost:5000/auth/logout
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNjk1ODA0ODI2NmRjNDQ5YjIyMzk3YiIsImlhdCI6MTYyMDA5MjkyOSwiZXhwIjoxNjIwMDk0NzI5fQ.eI4JfEdnpS4f9ZlQWw3tm6ihLQkIsA9_pKikvA3eqig
+Content-Type: application/json
+
+{
+  "refreshToken" :"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MjAwOTI5MjksImV4cCI6MTY1MTY1MDUyOX0.1FNlUfGsMWixhrym5jEcvr_IVAW4PtsSlNZofQ-GeU8"
+}
+
+
+###
 GET http://localhost:5000/communities/latest?page=1
 ###
 GET http://localhost:5000/communities/latest?page=2&lastId=608615a8b4cbbf0015ee3e90

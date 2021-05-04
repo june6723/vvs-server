@@ -1,24 +1,41 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
-import postRoutes from './routes/posts.js';
-import userRoutes from './routes/user.js';
-import communityRoutes from './routes/communities.js';
+import postRoutes from './routes/Posts.route.js';
+import userRoutes from './routes/User.route.js';
+import communityRoutes from './routes/Communities.route.js';
+import authRoutes from './routes/Auth.route.js';
 import dotenv from 'dotenv';
+import createError from 'http-errors'
 dotenv.config();
 
 const app = express();
 
-app.use(express.json({ limit: "30mb", extended: true }));
-app.use(express.urlencoded({ limit: "30mb", extended: true }));
+app.use(express.json({ limit: "5mb", extended: true }));
+app.use(express.urlencoded({ limit: "5mb", extended: true }));
 app.use(cors());
 
+app.use('/auth', authRoutes)
 app.use('/user', userRoutes);
 app.use('/posts', postRoutes);
 app.use('/communities', communityRoutes)
 
 app.get('/', (req, res) => {
   res.send('Hello to VVS API');
+})
+
+app.use((req, res, next) => {
+  next(createError.NotFound());
+})
+
+app.use((err, req, res, next) => {
+  res.status(err.status || 500);
+  res.send({
+    error:{
+      status: err.status || 500,
+      message: err.message,
+    }
+  })
 })
 
 const CONNECTION_URL = process.env.DB_CONNECTION;
