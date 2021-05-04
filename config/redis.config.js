@@ -1,9 +1,15 @@
 import redis from 'redis'
+import urijs from 'uri-js'
 
-const client = redis.createClient({
-  port: process.env.REIDS_PORT || 6379,
-  host: "127.0.0.1"
-})
+let client;
+if (process.env.REDIS_URL) {
+  client = redis.createClient(process.env.REDIS_URL);
+} else {
+  client = redis.createClient({
+    port: 6379,
+    host: "127.0.0.1"
+  })
+}
 
 client.on('connect', () => {
   console.log("Client connected to redis...")
