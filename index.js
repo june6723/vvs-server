@@ -13,7 +13,10 @@ const app = express();
 
 app.use(express.json({ limit: "5mb", extended: true }));
 app.use(express.urlencoded({ limit: "5mb", extended: true }));
-app.use(cors());
+app.use(cors({
+  origin: true,
+  credentials: true
+}));
 
 app.use('/auth', authRoutes)
 app.use('/user', userRoutes);
