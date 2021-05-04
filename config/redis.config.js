@@ -1,9 +1,17 @@
 import redis from 'redis'
 
-const client = redis.createClient({
-  port: process.env.REIDS_PORT || 6379,
-  host: "127.0.0.1"
-})
+let client;
+if (process.env.REDIS_URL) {
+  const rtg   = require("url-js").parse(process.env.REDIS_URL);
+  client = redis.createClient(rtg.port, rtg.hostname);
+
+  redis.auth(rtg.auth.split(":")[1]);
+} else {
+  client = redis.createClient({
+    port: 6379,
+    host: "127.0.0.1"
+  })
+}
 
 client.on('connect', () => {
   console.log("Client connected to redis...")
