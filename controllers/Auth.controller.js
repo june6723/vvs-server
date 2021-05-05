@@ -5,7 +5,7 @@ import User from '../models/User.js';
 import createError from 'http-errors'
 import { verfiyRefreshToken } from '../utils/jwt_verfiy.js';
 
-const expireTime = 15 * 60 // seconds
+const expireTime = 15 * 60
 
 export const signUp = async (req, res, next) => {
   const { email, password, confirmPassword, name, birthDate, gender } = req.body
