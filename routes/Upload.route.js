@@ -1,4 +1,4 @@
-import upload from '../middleware/upload.js'
+import upload from '../config/upload.js'
 import express from 'express'
 // AWS Series
 import AWS from 'aws-sdk'
@@ -6,7 +6,8 @@ import fs from 'fs'
 
 const router = express.Router();
 
-router.post('/', upload.single('mainImg'), async (req, res, next) => {
+router.post('/', upload.single('file'), async (req, res, next) => {
+  const file = req.file
   AWS.config.update({
     credentials: {
       accessKeyId:process.env.AWS_KEY,
@@ -15,8 +16,6 @@ router.post('/', upload.single('mainImg'), async (req, res, next) => {
     region: 'us-east-1',
   })
   try {
-    const file = req.file
-    console.log(file)
     const fileStream = fs.createReadStream(file.path)
     fileStream.on('error', (err)=> {
       return next(err)
@@ -33,7 +32,8 @@ router.post('/', upload.single('mainImg'), async (req, res, next) => {
     next(error)
   } finally {
     fs.unlink(file.path, (err) => {
-      console.log()
+      if (err) console.log(err)
+      console.log("file deleted.")
     })
   }
 })

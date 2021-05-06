@@ -15,9 +15,9 @@ export const createNewCommunity = async (req, res) => {
 
   try {
     const user = await User.findOne({ _id: userId });
-    // const { _id } = await newCommunity.save();
-    // user.joinedCommunities.push(_id)
-    // await user.save();
+    const { _id } = await newCommunity.save();
+    user.joinedCommunities.push(_id)
+    await user.save();
     res.status(201).json(newCommunity);
   } catch (error) {
     console.log(error)
