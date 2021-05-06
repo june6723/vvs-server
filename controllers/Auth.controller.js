@@ -22,7 +22,7 @@ export const signUp = async (req, res, next) => {
     const refreshToken = jwt.sign({}, process.env.REFRESH_TOKEN_SECRET, { expiresIn: "1y"})
     const profile = { name: result.name, profileImg: result.profileImg };
 
-    redisClient.SET(result._id, refreshToken, 'EX', 365*24*60*60, (err, reply) => {
+    redisClient.SET(result._id.toString(), refreshToken, 'EX', 365*24*60*60, (err, reply) => {
       if(err){
         next(err)
         return
