@@ -5,8 +5,10 @@ import postRoutes from './routes/Posts.route.js';
 import userRoutes from './routes/User.route.js';
 import communityRoutes from './routes/Communities.route.js';
 import authRoutes from './routes/Auth.route.js';
+import uploadRoutes from './routes/Upload.route.js';
 import dotenv from 'dotenv';
 import createError from 'http-errors'
+
 dotenv.config();
 
 const app = express();
@@ -18,6 +20,7 @@ app.use(cors({
   credentials: true
 }));
 
+app.use('/upload', uploadRoutes)
 app.use('/auth', authRoutes)
 app.use('/user', userRoutes);
 app.use('/posts', postRoutes);
@@ -32,6 +35,7 @@ app.use((req, res, next) => {
 })
 
 app.use((err, req, res, next) => {
+  console.log(err)
   res.status(err.status || 500);
   res.send({
     error:{

@@ -29,3 +29,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNjk1N2U1O
 ###
 PATCH http://localhost:5000/communities/60857bbede68e10ce73b6c13/join/606957e58266dc449b22397a?approve=true
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNjk1ODA0ODI2NmRjNDQ5YjIyMzk3YiIsImlhdCI6MTYxOTcwOTc3MiwiZXhwIjoxNjE5NzExNTcyfQ.Gat8aopvrX2TVt7Y-ISoIS5jNWepbSXJ1plgFlCAfng
+
+###
+POST http://localhost:5000/communities
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNjk1ODA0ODI2NmRjNDQ5YjIyMzk3YiIsImlhdCI6MTYyMDE5NTY1OSwiZXhwIjoxNjIwMTk2NTU5fQ.YOeWJOQHxn4lv-f5_EOc08JwMqU-5YI8hPjav-bplRs
+Content-Type: multipart/form-data
+
+{
+  
+}
