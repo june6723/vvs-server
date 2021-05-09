@@ -31,7 +31,6 @@ Heroku Demo: https://vvs-backend.herokuapp.com/
 - [x] **Latest communities** &#8594; GET /communities/latest (Pagination has to be added)
 ## Posts
 - [x] **Create new post** &#8594; POST /posts
-- [x] **Create new post in joined community** &#8594; POST /posts/community/:id
 - [ ] Update my post
 - [ ] Delete my post
 - [ ] Get my specific user's posts
@@ -43,9 +42,10 @@ Heroku Demo: https://vvs-backend.herokuapp.com/
 - [ ] Get comments of specific post
 
 ## Main Features to update
-- [ ] Upload imgs, vids on post
+- [x] Upload imgs, vids
 - [ ] Friends request
 - [ ] Real time Message
+- [ ] Handle imgs, vids properly
 - [ ] Group Chat
 - [ ] Voice Chat
 - [ ] Screen Sharing

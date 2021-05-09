@@ -1,6 +1,7 @@
 import Community from '../models/Community.js';
 import User from '../models/User.js';
 import Post from '../models/Post.js';
+import createError from 'http-errors'
 
 export const createNewCommunity = async (req, res) => {
   const communityForm = req.body;
@@ -19,26 +20,27 @@ export const createNewCommunity = async (req, res) => {
     await user.save();
     res.status(201).json(newCommunity);
   } catch (error) {
+    console.log(error)
     res.status(409).json({ error: error.message });
   }
 };
 
-export const latestCommunities = async (req, res) => {
+export const latestCommunities = async (req, res, next) => {
   const { page, lastId } = req.query;
   let lastId_in_this_query;
 
   if (page === '1') {
     try {
       const result = await Community.find().sort({ createdAt: -1 }).limit(10);
+      if (result.length === 0) return res.send()
       lastId_in_this_query = result[result.length-1]._id;
       res.status(201).json({ result, lastId_in_this_query })
     } catch (error) {
-      res.status(409).json({ error: error.message });
+      next(error)
     }
   } else {
     try {
       const result = await Community.find({'_id': {'$gt': lastId}}).limit(10);
-      console.log(result);
       lastId_in_this_query = result[result.length-1]._id;
       res.status(201).json({ result, lastId_in_this_query })
     } catch (error) {
@@ -81,7 +83,7 @@ export const getCommunityPosts = async (req, res) => {
   const communityId = req.params.id;
   
   try {
-    const result = await Post.find({ community: communityId });
+    const result = await Post.find({ community: communityId }).populate('creator')
     res.status(200).json(result);
   } catch (error) {
     console.log(error);
