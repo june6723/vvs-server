@@ -33,7 +33,6 @@ export const latestCommunities = async (req, res, next) => {
     try {
       const result = await Community.find().sort({ createdAt: -1 }).limit(10);
       if (result.length === 0) return res.send()
-      console.log(result)
       lastId_in_this_query = result[result.length-1]._id;
       res.status(201).json({ result, lastId_in_this_query })
     } catch (error) {
@@ -42,7 +41,6 @@ export const latestCommunities = async (req, res, next) => {
   } else {
     try {
       const result = await Community.find({'_id': {'$gt': lastId}}).limit(10);
-      console.log(result);
       lastId_in_this_query = result[result.length-1]._id;
       res.status(201).json({ result, lastId_in_this_query })
     } catch (error) {
@@ -85,7 +83,7 @@ export const getCommunityPosts = async (req, res) => {
   const communityId = req.params.id;
   
   try {
-    const result = await Post.find({ community: communityId });
+    const result = await Post.find({ community: communityId }).populate('creator')
     res.status(200).json(result);
   } catch (error) {
     console.log(error);

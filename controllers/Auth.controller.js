@@ -20,7 +20,7 @@ export const signUp = async (req, res, next) => {
     const result = await User.create({ email, password: hashedPassword, name, birthDate, gender });
     const accessToken = jwt.sign({ id: result._id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: expireTime });
     const refreshToken = jwt.sign({}, process.env.REFRESH_TOKEN_SECRET, { expiresIn: "1y"})
-    const profile = { name: result.name, profileImg: result.profileImg };
+    const profile = { id:result._id, name: result.name, profileImg: result.profileImg };
 
     redisClient.SET(result._id.toString(), refreshToken, 'EX', 365*24*60*60, (err, reply) => {
       if(err){
@@ -46,7 +46,7 @@ export const logIn = async (req, res, next) => {
 
     const accessToken = jwt.sign({ id: existingUser._id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: expireTime });
     const refreshToken = jwt.sign({}, process.env.REFRESH_TOKEN_SECRET, { expiresIn: "1y"})
-    const profile = { name: existingUser.name, profileImg: existingUser.profileImg };
+    const profile = { id: existingUser._id, name: existingUser.name, profileImg: existingUser.profileImg };
 
     redisClient.SET(existingUser._id.toString(), refreshToken, 'EX', 365*24*60*60, (err, result) => {
       if(err){
@@ -76,7 +76,7 @@ export const signNewToken = async (req, res, next) => {
 
     const accessToken = jwt.sign({ id: userId }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: expireTime });
     const newRefreshToken = jwt.sign({}, process.env.REFRESH_TOKEN_SECRET, { expiresIn: "1y"})
-    const profile = { name: existingUser.name, profileImg: existingUser.profileImg };
+    const profile = { id:existingUser._id, name: existingUser.name, profileImg: existingUser.profileImg };
 
     redisClient.SET(userId, newRefreshToken, 'EX', 365*24*60*60, (err, result) => {
       if(err){
