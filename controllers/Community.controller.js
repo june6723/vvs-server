@@ -83,7 +83,7 @@ export const getCommunityPosts = async (req, res) => {
   const communityId = req.params.id;
   
   try {
-    const result = await Post.find({ community: communityId }).populate('creator')
+    const result = await Post.find({ community: communityId }).populate('creator').sort({ _id: -1})
     res.status(200).json(result);
   } catch (error) {
     console.log(error);
@@ -102,6 +102,7 @@ export const requestToJoinCommunity = async (req, res) => {
     } else {
       if (member.includes(userId)) throw new Error('Already sent request to join');
       member.push(userId);
+      await User.findByIdAndUpdate(userId, { $push : { joinedCommunities : communityId } })
     }
     const updated = await Community.findByIdAndUpdate(communityId, { member, memberRequest }, { new:true });
     res.status(200).json(updated);

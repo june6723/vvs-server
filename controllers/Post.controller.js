@@ -28,3 +28,14 @@ export const getMyPosts = async (req, res) => {
     console.log(error);
   }
 };
+
+export const likePost = async (req, res, next) => {
+  const userId = req.userId
+  const postId = req.body.postId
+  try {
+    const result = await Post.findByIdAndUpdate(postId, { $push: { likes: userId } },{ new: true }).exec()
+    res.send(result)
+  } catch (error) {
+    next(error)
+  }
+}
