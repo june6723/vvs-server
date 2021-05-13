@@ -10,6 +10,7 @@ const postSchema = mongoose.Schema({
   videos: [{ type: String }],
   tags: [{ type: String }],
   likes: [{ type: Schema.Types.ObjectId, ref: 'User', default: [] }],
+  dislikes: [{ type: Schema.Types.ObjectId, ref: 'User', default: [] }],
   comments: [{ type: Schema.Types.ObjectId, ref: 'Comment', default: [] }],
 }, { timestamps: true })
 
