@@ -4,6 +4,7 @@ import cors from 'cors';
 import postRoutes from './routes/Posts.route.js';
 import userRoutes from './routes/User.route.js';
 import communityRoutes from './routes/Communities.route.js';
+import commentsRoutes from './routes/Comments.route.js';
 import authRoutes from './routes/Auth.route.js';
 import uploadRoutes from './routes/Upload.route.js';
 import dotenv from 'dotenv';
@@ -22,9 +23,10 @@ app.use(cors({
 
 app.use('/upload', uploadRoutes)
 app.use('/auth', authRoutes)
-app.use('/user', userRoutes);
-app.use('/posts', postRoutes);
+app.use('/user', userRoutes)
+app.use('/posts', postRoutes)
 app.use('/communities', communityRoutes)
+app.use('/comments', commentsRoutes)
 
 app.get('/', (req, res) => {
   res.send('Hello to VVS API');

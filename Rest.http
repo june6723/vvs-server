@@ -38,3 +38,11 @@ Content-Type: multipart/form-data
 {
   
 }
+###
+POST http://localhost:5000/comments/post/609ce0c9f980832641f722f6
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNjk1ODA0ODI2NmRjNDQ5YjIyMzk3YiIsImlhdCI6MTYyMTA3ODk1NCwiZXhwIjoxNjIxMDc5ODU0fQ.1WEmS1_VjQSUo8J-IpUgC4Q4bqZx_XIr0da-A4HV8fo
+Content-Type: application/json
+
+{
+  "text":"New comment!"
+}
