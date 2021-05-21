@@ -27,7 +27,7 @@ export const signUp = async (req, res, next) => {
         next(err)
         return
       }
-      res.send({ accessToken, accessTokenExp: expireTime, refreshToken, profile });
+      res.send({ accessToken, accessTokenExp: expireTime, refreshToken, profile, ok:true });
     })
   } catch (error) {
     next(error)
@@ -53,7 +53,7 @@ export const logIn = async (req, res, next) => {
         next(err)
         return
       }
-      res.send({ accessToken, accessTokenExp: expireTime, refreshToken, profile });
+      res.send({ accessToken, accessTokenExp: expireTime, refreshToken, profile, ok:true });
     })
   } catch (error) {
     console.log(error)
@@ -83,7 +83,7 @@ export const signNewToken = async (req, res, next) => {
         next(err)
         return
       }
-      res.send({ accessToken, accessTokenExp: expireTime, refreshToken: newRefreshToken, profile });
+      res.send({ accessToken, accessTokenExp: expireTime, refreshToken: newRefreshToken, profile, ok:true });
     })
   } catch (error) {
     next(error);
