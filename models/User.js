@@ -20,10 +20,12 @@ const userSchema = mongoose.Schema({
   birthDate: { type: Date },
   gender: { type: String, enum: ['male', 'female', 'others'] },
   profileImg: { type: String, default: null },
-  joinedCommunities: [{ type: Schema.Types.ObjectId, ref: 'Community' }],
   createdAt: { type: Date, default: new Date() },
   pwUpdated: { type: Date, default: new Date() },
   outDate: { type: Date },
+  joinedCommunities: [{ type: Schema.Types.ObjectId, ref: 'Community' }],
+  follwer: [{ type: Schema.Types.ObjectId, ref: 'User'}],
+  following: [{ type: Schema.Types.ObjectId, ref: 'User'}],
 })
 
 const User = mongoose.model('User', userSchema);
