@@ -55,3 +55,7 @@ Content-Type: application/json
 {
   "text":"New comment!"
 }
+
+###
+PATCH  http://localhost:5000/user/follow/606957e58266dc449b22397a
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNjk1ODA0ODI2NmRjNDQ5YjIyMzk3YiIsImlhdCI6MTYyMTY4NDAxNSwiZXhwIjoxNjIxNjg0OTE1fQ.ix4N2zAKBls5STvfH6H3GUyvNb_hOGw4V8gR6zKIhWI

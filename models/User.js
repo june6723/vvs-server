@@ -24,7 +24,7 @@ const userSchema = mongoose.Schema({
   pwUpdated: { type: Date, default: new Date() },
   outDate: { type: Date },
   joinedCommunities: [{ type: Schema.Types.ObjectId, ref: 'Community' }],
-  follwer: [{ type: Schema.Types.ObjectId, ref: 'User'}],
+  follower: [{ type: Schema.Types.ObjectId, ref: 'User'}],
   following: [{ type: Schema.Types.ObjectId, ref: 'User'}],
 })
 

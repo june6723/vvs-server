@@ -4,4 +4,4 @@
 
 .gitignore
 
-Rest.http
+*.http

@@ -1,7 +1,6 @@
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 import Community from '../models/Community.js';
+import createError from 'http-errors'
 
 const userSearchFields = ["_id", "email", "name", "gender", "birthDate", "joinedCommunities"];
 
@@ -50,5 +49,36 @@ export const findUser = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(400).json(error.message);
+  }
+}
+
+export const followOtherUser = async (req, res, next) => {
+  try {
+    const myId = req.userId
+    const { followId } = req.params
+
+    const followUser = await User.findById(followId)
+    const add = !followUser.follower.includes(myId)
+    if(add) {
+      Promise.all([
+        followUser.updateOne({ $push: { follower: myId }}),
+        User.findByIdAndUpdate(myId, { $push: { following: followId }})
+      ])
+      .then(() => {
+        return res.send()
+      })
+      .catch((err) => { return next(err) })
+    } else {
+      Promise.all([
+        followUser.updateOne({ $pull: { follower: myId }}),
+        User.findByIdAndUpdate(myId, { $pull: { following: followId }})
+      ])
+      .then(() => {
+        return res.send()
+      })
+      .catch((err) => { return next(err) })
+    }
+  } catch (error) {
+    next(error)
   }
 }
