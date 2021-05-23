@@ -1,6 +1,5 @@
 import upload from '../config/upload.js'
 import express from 'express'
-// AWS Series
 import AWS from 'aws-sdk'
 import fs from 'fs'
 
