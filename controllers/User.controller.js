@@ -82,3 +82,15 @@ export const followOtherUser = async (req, res, next) => {
     next(error)
   }
 }
+
+export const setProfileImg = async (req, res, next) => {
+  try {
+    const userId = req.userId
+    const { url } = req.body
+
+    const { _id, name, profileImg } = await User.findByIdAndUpdate(userId, { profileImg: url }, { new: true })
+    res.send({ id: _id, name, profileImg })
+  } catch (error) {
+    next(error)
+  }
+}
