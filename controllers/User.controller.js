@@ -29,10 +29,8 @@ export const findUser = async (req, res) => {
   try {
     switch (cmd) {
       case 'id':
-        const idResult = await User.findOne({ _id: value })
-        let finalResult = {};
-        userSearchFields.map((key) => { finalResult[key]=idResult[key] });
-        res.status(200).json(finalResult);
+        const idResult = await User.findOne({ _id: value }, '_id email name gender birthDate joinedCommunities follower following profileImg')
+        res.status(200).json(idResult);
         break;
       case 'name':
         const nameResult = await User.find({ name: new RegExp(value, 'i') });
@@ -88,8 +86,8 @@ export const setProfileImg = async (req, res, next) => {
     const userId = req.userId
     const { url } = req.body
 
-    const { _id, name, profileImg } = await User.findByIdAndUpdate(userId, { profileImg: url }, { new: true })
-    res.send({ id: _id, name, profileImg })
+    const result = await User.findByIdAndUpdate(userId, { profileImg: url }, { new: true }).select('_id email name gender birthDate joinedCommunities follower following profileImg')
+    res.send(result)
   } catch (error) {
     next(error)
   }
