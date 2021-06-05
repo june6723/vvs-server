@@ -2,8 +2,6 @@ import User from '../models/User.js';
 import Community from '../models/Community.js';
 import createError from 'http-errors'
 
-const userSearchFields = ["_id", "email", "name", "gender", "birthDate", "joinedCommunities"];
-
 export const getJoinedCommunities = async (req, res) => {
   const userId = req.params.id === "me" ? req.userId : req.params.id;
 
@@ -33,8 +31,8 @@ export const findUser = async (req, res) => {
         res.status(200).json(idResult);
         break;
       case 'name':
-        const nameResult = await User.find({ name: new RegExp(value, 'i') });
-        if (!nameResult.length) {
+        const nameResult = await User.findOne({ name: value.toLowerCase() }, '_id email name gender birthDate joinedCommunities follower following profileImg');
+        if (!nameResult) {
           res.status(204).json();
           break;
         }
@@ -59,20 +57,20 @@ export const followOtherUser = async (req, res, next) => {
     const add = !followUser.follower.includes(myId)
     if(add) {
       Promise.all([
-        followUser.updateOne({ $push: { follower: myId }}),
+        followUser.updateOne({ $push: { follower: myId }}, { new: true }),
         User.findByIdAndUpdate(myId, { $push: { following: followId }})
       ])
       .then(() => {
-        return res.send()
+        return res.send(followUser)
       })
       .catch((err) => { return next(err) })
     } else {
       Promise.all([
-        followUser.updateOne({ $pull: { follower: myId }}),
+        followUser.updateOne({ $pull: { follower: myId }}, { new: true }),
         User.findByIdAndUpdate(myId, { $pull: { following: followId }})
       ])
       .then(() => {
-        return res.send()
+        return res.send(followUser)
       })
       .catch((err) => { return next(err) })
     }
